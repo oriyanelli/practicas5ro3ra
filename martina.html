@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Martina Vera</title>
+
+  <style>
+    CSS
+/* --- Reset y básicos --- */
+* {
+    box-sizing: border-box;
+};
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding-bottom: 80px;
+}
+
+h1,
+h2 {
+     font-family: sans-serif;
+    margin-top: 0;
+}
+
+a {
+    color: #cc0066;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Header y menú --- */
+header {
+    background-color: #aa049c;
+    font-family: sans-serif;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+nav.topnav {
+    display: flex;
+    gap: 15px;
+}
+
+nav.topnav a {
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+nav.topnav a.active,
+nav.topnav a:hover {
+    background-color: #960a0a;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+}
+
+/* --- Main --- */
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: sans-serif;
+}
+
+/* Secciones */
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Galeria --- */
+#slider-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+    scroll-snap-type: x mandatory;
+}
+
+.slider-wrapper img {
+    min-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+    scroll-snap-align: start;
+}
+
+.slider-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px;
+    font-size: 2em;
+    z-index: 10;
+    border-radius: 10%;
+}
+
+.slider-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slider-prev {
+    left: 10px;
+}
+
+.slider-next {
+    right: 10px;
+}
+
+/* Lista de links */
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+/* Botonera */
+#botonera button {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    background-color: #0a9396;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#botonera button:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+#contenido-adicional {
+    margin-top: 15px;
+}
+
+/* Formulario */
+#seccionFormulario form {
+    max-width: 480px;
+    margin-top: 10px;
+}
+
+.campo-form {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-form label {
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.campo-form input,
+.campo-form textarea {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+#seccionFormulario button[type="submit"] {
+    background-color: #0a9396;
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+#seccionFormulario button[type="submit"]:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+#cerrarFormulario {
+    background-color: #ccc;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#cerrarFormulario:hover {
+    background-color: #999;
+    color: white;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    font-family: sans-serif;
+    position: fixed;
+    z-index: 1500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.activo {
+    display: flex;
+}
+
+.modal-contenido {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.cerrar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Footer fijo abajo */
+footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #005f73;
+    color: white;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    z-index: 1200;
+}
+
+/* Menú fijo abajo para controles */
+#menuInferior {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a9396;
+    border-radius: 30px;
+    padding: 8px 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 1300;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#menuInferior button {
+    background: #94d2bd;
+    border: none;
+    border-radius: 20px;
+    color: #005f73;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+
+#menuInferior button:hover {
+    background-color: #e9d8a6;
+    color: #222;
+}
+
+/* Botón modo oscuro */
+#btnModo {
+    position: fixed;
+    bottom: 90px;
+    right: 15px;
+    background: #0a9396;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1400;
+    transition: background-color 0.3s;
+}
+
+#btnModo:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+/* Responsive - menú hamburguesa */
+@media (max-width: 700px) {
+    nav.topnav {
+        display: none;
+        flex-direction: column;
+        background-color: #005f73;
+        position: absolute;
+        top: 50px;
+        right: 20px;
+        border-radius: 8px;
+        padding: 10px 20px;
+        width: 180px;
+    }
+
+    nav.topnav.activo {
+        display: flex;
+    }
+
+    header {
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* Modo oscuro */
+body.modo-oscuro {
+    background-color: #121212;
+    color: #ddd;
+}
+
+body.modo-oscuro header {
+    background-color: #222;
+    color: #eee;
+}
+
+body.modo-oscuro nav.topnav a {
+    color: #ddd;
+}
+
+body.modo-oscuro nav.topnav a.active,
+body.modo-oscuro nav.topnav a:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+body.modo-oscuro footer {
+    background-color: #222;
+    color: #ddd;
+}
+
+body.modo-oscuro #menuInferior {
+    background: #333;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.modo-oscuro #menuInferior button {
+    background: #555;
+    color: #eee;
+}
+
+body.modo-oscuro #menuInferior button:hover {
+    background-color: #777;
+    color: #fff;
+}
+
+body.modo-oscuro #btnModo {
+    background: #444;
+    color: #eee;
+}
+
+body.modo-oscuro #btnModo:hover {
+    background-color: #777;
+    color: #fff;
+}
+
+  </style>
+
+  
+</head>
+<body>
+  <HTML>
+<rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<header>
+  <h1>Mi web</h1>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"> ☰ </button>
+  <nav class="topnav" id="navMenu">
+    <a class="active" href="#sobremi"><i class="fa fa-fw fa-home"></i> Inicio </a>
+    <a href="#intro"><i class="fa fa-fw fa-image"></i> Intro</a>
+    <a href="#slider-container"><i class="fa fa-fw fa-image"></i> Galería </a>
+    <a href="#links"> <i class="fa-solid fa-cloud"></i> Links </a>
+    <a href="#botonera"><i class="fa-solid fa-check"></i> Botonera </a>
+    <a href="#" id="linkFormulario"><i class="fa fa-fw fa-envelope"></i> Formulario </a>
+  </nav>
+</header>
+<main>
+  <section id="intro">
+    <h2>martu's page</h2>
+    <p> holichis amis les mando pupis besos y pupis abrazos </p>
+  </section>
+  <section id="slider-container" class="slider-container">
+    <h2>Galería</h2>
+    <div class="slider-wrapper">
+      <img src="https://media.elcomercio.com/wp-content/uploads/2023/01/perrito-700x391.jpg" alt="Paisaje" />
+      <img src="https://placehold.co/100" alt="Arquitectura" />
+      <img src="https://placehold.co/100" alt="Ciudad" />
+      <img src="https://placehold.co/100" alt="Comida" />
+      <img src="https://placehold.co/100" alt="Naturaleza" />
+      <img src="https://placehold.co/100" alt="Arte" />
+    </div>
+    <button class="slider-nav-btn slider-prev" aria-label="Imagen anterior"> ❮ </button>
+    <button class="slider-nav-btn slider-next" aria-label="Imagen siguiente"> ❯ </button>
+  </section>
+
+  <!-- Links -->
+  <section id="links">
+    <h2>Links</h2>
+    <ul>
+      <li>
+        <a href="https://es.wikipedia.org/wiki/Golden_retriever" target="_blank" rel="noopener noreferrer">Goldenss</a>
+      </li>
+      <li>
+        <a href="https://www.despegar.com.ar/paquetes/puj/paquetes-a-punta+cana" target="_blank" rel="noopener noreferrer">Viaja a Punta Cana con los pupis</a>
+      </li>
+      <li>
+        <a href="https://es.wikipedia.org/wiki/Zootopia_2" target="_blank" rel="noopener noreferrer">Cine zootopia 2</a>
+      </li>
+    </ul>
+  </section>
+  <section id="botonera">
+    <h2>Botonera</h2>
+    <button onclick="mostrarMensaje()">Mensaje</button>
+    <button onclick="mostrarOcultar()">Mostrar video</button>
+    <button onclick="abrirModal()">Abrir modal</button>
+    <div id="contenido-adicional" hidden>
+      <<iframe width="560" height="315" src="https://www.youtube.com/embed/ybhNZqEnkYQ?si=DMuhMrp-5EAtE7E1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>>
+    </div>
+  </section>
+
+  <!-- FORMULARIO  -->
+  <section id="seccionFormulario" style="display: none">
+    <h2>Formulario de Contacto</h2>
+    <form id="formContacto">
+      <div class="campo-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
+      </div>
+      <div class="campo-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="campo-form">
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+    <button id="cerrarFormulario" style="margin-top: 15px; padding: 6px 12px; cursor: pointer"> Cerrar formulario </button>
+    <div id="resultado" style="margin-top: 12px; font-weight: bold"></div>
+  </section>
+</main>
+
+  <!-- MODAL -->
+<div id="miModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-contenido">
+    <button class="cerrar" onclick="cerrarModal()" aria-label="Cerrar modal"> × </button>
+    <h3>holu pupi amichis</h3>
+    <p>que le dice un pez a otro pez? nadaa 🐟 muejeje</p>
+  </div>
+</div>
+
+  <!-- BOTONERA -->
+<div id="menuInferior" role="region" aria-label="Controles de tamaño y modo">
+  <button id="btnAumentar" aria-label="Aumentar tamaño de letra">A+</button>
+  <button id="btnDisminuir" aria-label="Disminuir tamaño de letra">A-</button>
+  <button id="btnResetear" aria-label="Restablecer tamaño de letra">A</button>
+</div>
+<button id="btnModo" aria-pressed="false" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo claro/oscuro"> 🌓 </button>
+
+<footer>
+  <p>xoxo 😘</p>
+</footer>
+
+
+  <script>
+    // Variables para controlar tamaño de letra base y actual
+const texto = document.querySelector("main");
+const tamañoBase = 16;
+let tamañoActual = tamañoBase;
+texto.style.fontSize = tamañoActual + "px"; // Funciones para modificar tamaño de letra
+
+function aumentarLetra() {
+  tamañoActual += 2;
+  texto.style.fontSize = tamañoActual + "px";
+}
+function disminuirLetra() {
+  if (tamañoActual > 8) {
+    tamañoActual -= 2;
+    texto.style.fontSize = tamañoActual + "px";
+  }
+}
+function resetearLetra() {
+  tamañoActual = tamañoBase;
+  texto.style.fontSize = tamañoActual + "px";
+} // Eventos botones tamaño letra
+
+document.getElementById("btnAumentar").addEventListener("click", aumentarLetra);
+document
+  .getElementById("btnDisminuir")
+  .addEventListener("click", disminuirLetra);
+document.getElementById("btnResetear").addEventListener("click", resetearLetra); // Toggle menú hamburguesa responsive
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("activo");
+}); // --- Lógica de la nueva galería deslizable (Slider) ---
+const sliderWrapper = document.querySelector(".slider-wrapper");
+const sliderPrev = document.querySelector(".slider-prev");
+const sliderNext = document.querySelector(".slider-next");
+const slides = document.querySelectorAll(".slider-wrapper img");
+let currentIndex = 0;
+
+function updateSlider() {
+  sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+sliderPrev.addEventListener("click", () => {
+  currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+  updateSlider();
+});
+
+sliderNext.addEventListener("click", () => {
+  currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+  updateSlider();
+}); // --- Fin de la lógica del slider ---
+// Mostrar/Ocultar video en botonera
+function mostrarOcultar() {
+  const contenido = document.getElementById("contenido-adicional");
+  if (contenido.hidden) {
+    contenido.hidden = false;
+  } else {
+    contenido.hidden = true;
+  }
+}
+window.mostrarOcultar = mostrarOcultar; // Mostrar mensaje de ejemplo
+
+function mostrarMensaje() {
+  alert("sabias cuanto te ama la vaca? muuuuuuucho 🐮 ");
+}
+window.mostrarMensaje = mostrarMensaje; // Modal abrir y cerrar
+
+const modal = document.getElementById("miModal");
+function abrirModal() {
+  modal.classList.add("activo");
+  modal.setAttribute("aria-hidden", "false");
+}
+window.abrirModal = abrirModal;
+
+function cerrarModal() {
+  modal.classList.remove("activo");
+  modal.setAttribute("aria-hidden", "true");
+}
+window.cerrarModal = cerrarModal;
+
+window.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    cerrarModal();
+  }
+}); // Link formulario (simula abrir sección formulario y oculta otras)
+
+const linkFormulario = document.getElementById("linkFormulario");
+const seccionFormulario = document.getElementById("seccionFormulario");
+const seccionesVisibles = [
+  "sobremi",
+  "slider-container",
+  "hobbies",
+  "botonera",
+];
+linkFormulario.addEventListener("click", (e) => {
+  e.preventDefault(); // Ocultar secciones visibles
+  seccionesVisibles.forEach((id) => {
+    const seccion = document.getElementById(id);
+    if (seccion) seccion.style.display = "none";
+  });
+  seccionFormulario.style.display = "block"; // Ocultar menú hamburguesa si está activo
+  navMenu.classList.remove("activo");
+}); // Botón cerrar formulario vuelve a mostrar secciones principales
+
+const btnCerrarFormulario = document.getElementById("cerrarFormulario");
+btnCerrarFormulario.addEventListener("click", () => {
+  seccionesVisibles.forEach((id) => {
+    const seccion = document.getElementById(id);
+    if (seccion) seccion.style.display = "block";
+  });
+  seccionFormulario.style.display = "none";
+}); // Manejo formulario contacto
+
+const formContacto = document.getElementById("formContacto");
+const resultado = document.getElementById("resultado");
+formContacto.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const nombre = formContacto.nombre.value.trim();
+  const email = formContacto.email.value.trim();
+  const mensaje = formContacto.mensaje.value.trim();
+
+  if (nombre && email && mensaje) {
+    resultado.style.color = "green";
+    resultado.textContent = `Gracias ${nombre}, tu mensaje ha sido enviado.`;
+    formContacto.reset();
+  } else {
+    resultado.style.color = "red";
+    resultado.textContent = "Por favor completa todos los campos.";
+  }
+}); // Botón cambiar modo claro/oscuro
+
+const btnModo = document.getElementById("btnModo");
+btnModo.addEventListener("click", () => {
+  document.body.classList.toggle("modo-oscuro");
+  const modoActivo = document.body.classList.contains("modo-oscuro");
+  btnModo.setAttribute("aria-pressed", modoActivo);
+});
+  </script>
+</body>
+</html>
