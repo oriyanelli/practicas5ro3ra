@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Práctica HTML + CSS // 5to 3ra</title>
+
+  <style>
+    /* --- Reset y básicos --- */
+* {
+    box-sizing: border-box;
+};
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding-bottom: 80px;
+}
+
+h1,
+h2 {
+     font-family: sans-serif;
+    margin-top: 0;
+}
+
+a {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Header y menú --- */
+header {
+    background-color: #005f73;
+    font-family: sans-serif;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+nav.topnav {
+    display: flex;
+    gap: 15px;
+}
+
+nav.topnav a {
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+nav.topnav a.active,
+nav.topnav a:hover {
+    background-color: #0a9396;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+}
+
+/* --- Main --- */
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: sans-serif;
+}
+
+/* Secciones */
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Galeria --- */
+#slider-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+    scroll-snap-type: x mandatory;
+}
+
+.slider-wrapper img {
+    min-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+    scroll-snap-align: start;
+}
+
+.slider-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px;
+    font-size: 2em;
+    z-index: 10;
+    border-radius: 10%;
+}
+
+.slider-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slider-prev {
+    left: 10px;
+}
+
+.slider-next {
+    right: 10px;
+}
+
+/* Lista de links */
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+/* Botonera */
+#botonera button {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 10px 18px;
+    border: none;
+    background-color: #0a9396;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#botonera button:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+#contenido-adicional {
+    margin-top: 15px;
+}
+
+/* Formulario */
+#seccionFormulario form {
+    max-width: 480px;
+    margin-top: 10px;
+}
+
+.campo-form {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-form label {
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.campo-form input,
+.campo-form textarea {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+#seccionFormulario button[type="submit"] {
+    background-color: #0a9396;
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+#seccionFormulario button[type="submit"]:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+#cerrarFormulario {
+    background-color: #ccc;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#cerrarFormulario:hover {
+    background-color: #999;
+    color: white;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    font-family: sans-serif;
+    position: fixed;
+    z-index: 1500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.activo {
+    display: flex;
+}
+
+.modal-contenido {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.cerrar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Footer fijo abajo */
+footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #005f73;
+    color: white;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    z-index: 1200;
+}
+
+/* Menú fijo abajo para controles */
+#menuInferior {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a9396;
+    border-radius: 30px;
+    padding: 8px 12px;
+    display: flex;
+    gap: 10px;
+    z-index: 1300;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#menuInferior button {
+    background: #94d2bd;
+    border: none;
+    border-radius: 20px;
+    color: #005f73;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+
+#menuInferior button:hover {
+    background-color: #e9d8a6;
+    color: #222;
+}
+
+/* Botón modo oscuro */
+#btnModo {
+    position: fixed;
+    bottom: 90px;
+    right: 15px;
+    background: #0a9396;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1400;
+    transition: background-color 0.3s;
+}
+
+#btnModo:hover {
+    background-color: #94d2bd;
+    color: #005f73;
+}
+
+/* Responsive - menú hamburguesa */
+@media (max-width: 700px) {
+    nav.topnav {
+        display: none;
+        flex-direction: column;
+        background-color: #005f73;
+        position: absolute;
+        top: 50px;
+        right: 20px;
+        border-radius: 8px;
+        padding: 10px 20px;
+        width: 180px;
+    }
+
+    nav.topnav.activo {
+        display: flex;
+    }
+
+    header {
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* Modo oscuro */
+body.modo-oscuro {
+    background-color: #121212;
+    color: #ddd;
+}
+
+body.modo-oscuro header {
+    background-color: #222;
+    color: #eee;
+}
+
+body.modo-oscuro nav.topnav a {
+    color: #ddd;
+}
+
+body.modo-oscuro nav.topnav a.active,
+body.modo-oscuro nav.topnav a:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+body.modo-oscuro footer {
+    background-color: #222;
+    color: #ddd;
+}
+
+body.modo-oscuro #menuInferior {
+    background: #333;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.modo-oscuro #menuInferior button {
+    background: #555;
+    color: #eee;
+}
+
+body.modo-oscuro #menuInferior button:hover {
+    background-color: #777;
+    color: #fff;
+}
+
+body.modo-oscuro #btnModo {
+    background: #444;
+    color: #eee;
+}
+
+body.modo-oscuro #btnModo:hover {
+    background-color: #777;
+    color: #fff;
+}
+  </style>
+
+  
+</head>
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<header>
+  <h1>MASTERCLASS SIGMA-BOY</h1>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"> ☰ </button>
+  <nav class="topnav" id="navMenu">
+    <a class="active" href="#sobremi"><i class="fa fa-fw fa-home"></i> Inicio </a>
+    <a href="#intro"><i class="fa fa-fw fa-image"></i> Intro </a>
+    <a href="#slider-container"><i class="fa fa-fw fa-image"></i> Galería </a>
+    <a href="#links"> <i class="fa-solid fa-cloud"></i> Links </a>
+    <a href="#botonera"><i class="fa-solid fa-check"></i> Botonera </a>
+    <a href="#" id="linkFormulario"><i class="fa fa-fw fa-envelope"></i> Formulario </a>
+  </nav>
+</header>
+<main>
+  <section id="intro">
+    <h2>PARTE 1: EL AURA.</h2>
+    <p> 
+      "aura" se refiere a una especie de energía o atmósfera que rodea a una persona, objeto o situación, que puede ser percibida como misteriosa, surrealista o cómica. Usualmente, se usa para describir una vibra particular que se transmite de manera exagerada o irónica, como una forma de crear humor a través de la exageración de las sensaciones o emociones que genera algo o alguien.
+      
+      Si estas leyendo esto es porque fuiste rigurosamente seleccionado/a para ser parte de esta sociedad anonima. </p>
+  </section>
+  <section id="slider-container" class="slider-container">
+    <h2>NueSTra s0ciEDad</h2>
+    <div class="slider-wrapper">
+      <img src="https://lh6.googleusercontent.com/proxy/M7_RVvXoQM6jSExkyZH6mxgwQhBc9SWZaAgm_vng_qJ3FY4vXmNGGiqUWsN6AV2LxrWqU6PTZ-vUik2pMWxySvHWye10T712MicqoUTDuftWv5_KO_KffwP89qPO7uH59fDpag" alt="illuminati" />
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQga3wNqwIwHb1o-jIZql9cnoTFgPgdnIHOEeJP667OK_HUCKhzZIicTsmPJkCyafjJeWg&usqp=CAU" alt="Arquitectura" />
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqgoerw82nbgg5ro2vTPalEC0PkCKqhMOnkw&s" alt="Ciudad" />
+      <img src="data:image/jpeg;base64,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" alt="Comida" />
+      <img src="https://placehold.co/100" alt="Naturaleza" />
+      <img src="https://placehold.co/100" alt="Arte" />
+    </div>
+    <button class="slider-nav-btn slider-prev" aria-label="Imagen anterior"> ❮ </button>
+    <button class="slider-nav-btn slider-next" aria-label="Imagen siguiente"> ❯ </button>
+  </section>
+
+  <!-- Links -->
+  <section id="links">
+    <h2>mAs soBr3 n0Sotr0s</h2>
+    <ul>
+      <li>
+        <a href="https://es.wikipedia.org/wiki/Iluminados_de_Baviera" target="_blank" rel="noopener noreferrer">Nuestra Historia</a>
+      </li>
+      <li>
+        <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7PGjDlWqmzEVJ-Qj9wtTJN_VGrPRPdG8LRLiIHiGKs7J-Lxok-E-qZTul_GMoVpUGlVg&usqp=CAU" target="_blank" rel="noopener noreferrer">Encuentros</a>
+      </li>
+      <li>
+        <a href="https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSr46XByl5yAsbF-n8lqh6LEIvK7_-WQI-E1g">Mascota</a>
+      </li>
+    </ul>
+
+
+  <!-- FORMULARIO  -->
+  <section id="seccionFormulario" style="display: none">
+    <h2>Formulario de Contacto</h2>
+    <form id="formContacto">
+      <div class="campo-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
+      </div>
+      <div class="campo-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="campo-form">
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+    <button id="cerrarFormulario" style="margin-top: 15px; padding: 6px 12px; cursor: pointer"> Cerrar formulario </button>
+    <div id="resultado" style="margin-top: 12px; font-weight: bold"></div>
+  </section>
+</main>
+
+  <!-- MODAL -->
+<div id="miModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-contenido">
+    <button class="cerrar" onclick="cerrarModal()" aria-label="Cerrar modal"> × </button>
+    <h3>Modal emergente</h3>
+    <p>Este es un ejemplo de modal con interactividad y estilos.</p>
+  </div>
+</div>
+
+  <!-- BOTONERA -->
+<div id="menuInferior" role="region" aria-label="Controles de tamaño y modo">
+  <button id="btnAumentar" aria-label="Aumentar tamaño de letra">A+</button>
+  <button id="btnDisminuir" aria-label="Disminuir tamaño de letra">A-</button>
+  <button id="btnResetear" aria-label="Restablecer tamaño de letra">A</button>
+</div>
+<button id="btnModo" aria-pressed="false" aria-label="Cambiar modo claro/oscuro" title="Cambiar modo claro/oscuro"> 🌓 </button>
+
+<footer>
+  <p>© 2025 Mi Página Web</p>
+</footer>
+
+  <script>
+    // Variables para controlar tamaño de letra base y actual
+const texto = document.querySelector("main");
+const tamañoBase = 16;
+let tamañoActual = tamañoBase;
+texto.style.fontSize = tamañoActual + "px"; // Funciones para modificar tamaño de letra
+
+function aumentarLetra() {
+  tamañoActual += 2;
+  texto.style.fontSize = tamañoActual + "px";
+}
+function disminuirLetra() {
+  if (tamañoActual > 8) {
+    tamañoActual -= 2;
+    texto.style.fontSize = tamañoActual + "px";
+  }
+}
+function resetearLetra() {
+  tamañoActual = tamañoBase;
+  texto.style.fontSize = tamañoActual + "px";
+} // Eventos botones tamaño letra
+
+document.getElementById("btnAumentar").addEventListener("click", aumentarLetra);
+document
+  .getElementById("btnDisminuir")
+  .addEventListener("click", disminuirLetra);
+document.getElementById("btnResetear").addEventListener("click", resetearLetra); // Toggle menú hamburguesa responsive
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("activo");
+}); // --- Lógica de la nueva galería deslizable (Slider) ---
+const sliderWrapper = document.querySelector(".slider-wrapper");
+const sliderPrev = document.querySelector(".slider-prev");
+const sliderNext = document.querySelector(".slider-next");
+const slides = document.querySelectorAll(".slider-wrapper img");
+let currentIndex = 0;
+
+function updateSlider() {
+  sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+}
+
+sliderPrev.addEventListener("click", () => {
+  currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+  updateSlider();
+});
+
+sliderNext.addEventListener("click", () => {
+  currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+  updateSlider();
+}); // --- Fin de la lógica del slider ---
+// Mostrar/Ocultar video en botonera
+function mostrarOcultar() {
+  const contenido = document.getElementById("contenido-adicional");
+  if (contenido.hidden) {
+    contenido.hidden = false;
+  } else {
+    contenido.hidden = true;
+  }
+}
+window.mostrarOcultar = mostrarOcultar; // Mostrar mensaje de ejemplo
+
+function mostrarMensaje() {
+  alert("¡CUIDADO! Este botón tiene mucha facha 😎 ");
+}
+window.mostrarMensaje = mostrarMensaje; // Modal abrir y cerrar
+
+const modal = document.getElementById("miModal");
+function abrirModal() {
+  modal.classList.add("activo");
+  modal.setAttribute("aria-hidden", "false");
+}
+window.abrirModal = abrirModal;
+
+function cerrarModal() {
+  modal.classList.remove("activo");
+  modal.setAttribute("aria-hidden", "true");
+}
+window.cerrarModal = cerrarModal;
+
+window.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    cerrarModal();
+  }
+}); // Link formulario (simula abrir sección formulario y oculta otras)
+
+const linkFormulario = document.getElementById("linkFormulario");
+const seccionFormulario = document.getElementById("seccionFormulario");
+const seccionesVisibles = [
+  "sobremi",
+  "slider-container",
+  "hobbies",
+  "botonera",
+];
+linkFormulario.addEventListener("click", (e) => {
+  e.preventDefault(); // Ocultar secciones visibles
+  seccionesVisibles.forEach((id) => {
+    const seccion = document.getElementById(id);
+    if (seccion) seccion.style.display = "none";
+  });
+  seccionFormulario.style.display = "block"; // Ocultar menú hamburguesa si está activo
+  navMenu.classList.remove("activo");
+}); // Botón cerrar formulario vuelve a mostrar secciones principales
+
+const btnCerrarFormulario = document.getElementById("cerrarFormulario");
+btnCerrarFormulario.addEventListener("click", () => {
+  seccionesVisibles.forEach((id) => {
+    const seccion = document.getElementById(id);
+    if (seccion) seccion.style.display = "block";
+  });
+  seccionFormulario.style.display = "none";
+}); // Manejo formulario contacto
+
+const formContacto = document.getElementById("formContacto");
+const resultado = document.getElementById("resultado");
+formContacto.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const nombre = formContacto.nombre.value.trim();
+  const email = formContacto.email.value.trim();
+  const mensaje = formContacto.mensaje.value.trim();
+
+  if (nombre && email && mensaje) {
+    resultado.style.color = "green";
+    resultado.textContent = `Gracias ${nombre}, tu mensaje ha sido enviado.`;
+    formContacto.reset();
+  } else {
+    resultado.style.color = "red";
+    resultado.textContent = "Por favor completa todos los campos.";
+  }
+}); // Botón cambiar modo claro/oscuro
+
+const btnModo = document.getElementById("btnModo");
+btnModo.addEventListener("click", () => {
+  document.body.classList.toggle("modo-oscuro");
+  const modoActivo = document.body.classList.contains("modo-oscuro");
+  btnModo.setAttribute("aria-pressed", modoActivo);
+});
+
+  </script>
+</body>
+</html>
